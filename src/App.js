@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
 
-class ApiData extends React.Component {
+export default class ApiData extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      name: '',
+      name: [],
+      steam: [],
       greeting: ''
-    }
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  this.handleChange = this.handleChange.bind(this);
-  this.handleSubmit = this.handleSubmit.bind(this);
-}
 
-/*   componentDidMount(){
+   componentDidMount(){
     console.log("blah");
-    axios.get(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=574F7810E04E32E957BD5947BC5A6CB0&steamids=76561198013760344`, { crossdomain: true})
+    axios.get(`/api/getUserInfo`)
     .then(res => {
-      const steam = res.data;
-      this.setState({steam});
+      this.setState({ steam: res.data });
     })
-  }; */
+  };
 
   handleChange(event){
     this.setState({ name: event.target.value });
@@ -30,12 +29,16 @@ class ApiData extends React.Component {
 
   handleSubmit(event){
     event.preventDefault();
-    fetch(`/api/greeting?name=${encodeURIComponent(this.state.name)}`)
+    var thing = fetch(`/api/getUserInfo`)
       .then(res => res.json())
-      .then(state => this.setState(state));
+      .then((result) => {
+        this.setState({
+          name: result.response.players
+        });
+      });
   }
   render(){
-    return(<div>
+    return (<div>
       <form onSubmit={this.handleSubmit}>
         <label htmlFor="name">Enter your name:</label>
         <input id="name" type="text"
@@ -43,7 +46,16 @@ class ApiData extends React.Component {
         onChange={this.handleChange} />
         <button type="submit">submit</button>
       </form>
-      <p>{this.state.greeting}</p>
+      <ul>
+        {this.state.name.map(thing => <li>{thing.personaname}</li>)}
+      </ul>
+      <ul>
+        {this.state.steam.map(item => (
+          <li>key={item.objectID}
+            <a href={item.url}>{item.title}</a>
+            </li>
+        ))}
+      </ul>
       </div>
     )
   }
@@ -52,18 +64,35 @@ class ApiData extends React.Component {
 
 
 function App() {
+  const [data, setData] = useState({});
+  return( <ApiData />)
+}
+/*   useEffect(() => {
+      const result = axios.get(
+        '/api/getUserInfo',
+      );
 
-  return (
+      setData(result.data);
+    }, []);
+
+  console.log("Here is the stuff:", data); 
+  return 
     <div className="App">
       <header className="App-header">
         <p>
           Steam Account Project CS419
         </p>
-         <ApiData /> 
+      <ul>
+        {data.map(item => (
+          <li>key={item.objectID}
+            <a href={item.url}>{item.title}</a>
+            </li>
+        ))}
+      </ul>
       </header>
     </div>
-  );
+  : <ApiData />;
 }
-
+*/
 export default App;
 //574F7810E04E32E957BD5947BC5A6CB0
