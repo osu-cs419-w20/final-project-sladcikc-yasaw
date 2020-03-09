@@ -32,7 +32,7 @@ export default function SearchUser(){
     }
     else{
         return(
-        <Redirect to={`/user/${name}`} />
+        <Redirect push to={`/user/${name}`} />
         );
     }
 }

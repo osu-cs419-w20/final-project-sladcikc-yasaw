@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import {
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  Redirect,
+} from 'react-router-dom';
 import UserInfo from './Components/User'
 import SearchUser from './Components/Search'
 import { getSearch } from './redux/selectors'
@@ -71,9 +78,14 @@ function App() {
   const [data, setData] = useState({});
   return( 
     <div>
+      <Switch>
+        <Route path="/user">
+          <UserInfo />
+        </Route>
+      </Switch>
       <SearchUser />
     </div>
-    )
+  )
 }
 /*   useEffect(() => {
       const result = axios.get(
