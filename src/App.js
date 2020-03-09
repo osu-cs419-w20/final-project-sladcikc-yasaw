@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import UserInfo from './Components/User'
 import './App.css';
 
 
-export default class ApiData extends React.Component {
+/* class ApiData extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -60,12 +61,12 @@ export default class ApiData extends React.Component {
     )
   }
 
-}
+} */
 
 
 function App() {
   const [data, setData] = useState({});
-  return( <ApiData />)
+  return( <UserInfo />)
 }
 /*   useEffect(() => {
       const result = axios.get(
