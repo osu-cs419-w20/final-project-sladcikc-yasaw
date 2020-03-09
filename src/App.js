@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import UserInfo from './Components/User'
 import SearchUser from './Components/Search'
+import { getSearch } from './redux/selectors'
 import './App.css';
 
 
@@ -67,7 +69,11 @@ import './App.css';
 
 function App() {
   const [data, setData] = useState({});
-  return( <SearchUser />)
+  return( 
+    <div>
+      <SearchUser />
+    </div>
+    )
 }
 /*   useEffect(() => {
       const result = axios.get(

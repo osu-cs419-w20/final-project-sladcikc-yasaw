@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 
 app.get('/api/getUserInfo', (req, res) => {
     console.log(req)
-    var url = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='+apiKey+'&steamids=76561197965989031';
+    var url = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='+apiKey+'&steamids=76561198013760344';
     request(url, function(err, response, body){
         if(!err && response.statusCode < 400){
             console.log(body);
