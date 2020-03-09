@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserInfo from './Components/User'
+import SearchUser from './Components/Search'
 import './App.css';
 
 
@@ -66,7 +67,7 @@ import './App.css';
 
 function App() {
   const [data, setData] = useState({});
-  return( <UserInfo />)
+  return( <SearchUser />)
 }
 /*   useEffect(() => {
       const result = axios.get(
