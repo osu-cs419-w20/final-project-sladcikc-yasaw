@@ -1,12 +1,12 @@
 import React from 'react';
 import Axios from 'axios';
-
 import { useDispatch } from 'react-redux';
+import { useRouteMatch } from 'react-router-dom';
 
 import { addUser } from '../redux/actions';
+import { getSearch } from '../redux/selectors';
 
-
-export function UserContainer(user){
+function UserContainer(user){
     const dispatch = useDispatch();
     dispatch(addUser(user));
     return(
@@ -16,13 +16,16 @@ export function UserContainer(user){
     )
 }
 
+
 export default class UserInfo extends React.Component{
     state = {
         user: {},
+        value: ''
     }
 
+
     componentDidMount(){
-        Axios.get('/api/getUserInfo')
+        Axios.get(`/api/getUserInfo?${this.state.value}`)
             .then(res => {
                 console.log(res.data.response.players);
                 this.setState({user: res.data.response.players[0]})

@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSearch } from '../redux/actions';
-import { getSearch } from '../redux/selectors'
+import { getSearch } from '../redux/selectors';
 
 function HandleChange(value){
     const dispatch = useDispatch();

@@ -79,8 +79,8 @@ function App() {
   return( 
     <div>
       <Switch>
-        <Route path="/user">
-          <UserInfo />
+        <Route path="/user/">
+          <UserInfo value={getSearch()}/>
         </Route>
       </Switch>
       <SearchUser />
