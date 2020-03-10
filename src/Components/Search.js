@@ -21,7 +21,7 @@ export default function SearchUser(){
     const user = useSelector(getSearch);
     const match = useRouteMatch();
     const name = user.userReducer.search
-    console.log(user.userReducer.search)
+    //console.log(user.userReducer.search)
     if(!name){
         return(
             <div>

@@ -76,14 +76,19 @@ import './App.css';
 
 function App() {
   const [data, setData] = useState({});
+  const thing = useSelector(getSearch);
+  console.log(thing)
   return( 
     <div>
       <Switch>
-        <Route path="/user/">
-          <UserInfo value={getSearch()}/>
+        <Route path="/user/:id">
+          <UserInfo id={thing}/>
+        </Route>
+        <Route exact path="/">
+          <SearchUser />
         </Route>
       </Switch>
-      <SearchUser />
+     
     </div>
   )
 }

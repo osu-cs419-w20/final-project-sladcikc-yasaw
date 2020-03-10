@@ -18,18 +18,25 @@ function UserContainer(user){
 
 
 export default class UserInfo extends React.Component{
-    state = {
-        user: {},
-        value: ''
+    constructor(props){
+        super(props);
+        this.state = {
+            user: {},
+            search: this.props.id.userReducer.search,
+            pathArray: window.location.pathname.split('/'),
+            lastPart: '',
+        }
     }
 
 
     componentDidMount(){
-        Axios.get(`/api/getUserInfo?${this.state.value}`)
+        this.setState({lastPart: this.state.pathArray[2]})
+        Axios.get(`/api/getUserInfo?${this.state.lastPart}`)
             .then(res => {
-                console.log(res.data.response.players);
+                //console.log(res.data.response.players);
                 this.setState({user: res.data.response.players[0]})
             })
+            
     }
 
     render(){
