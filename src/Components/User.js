@@ -1,51 +1,105 @@
-import React from 'react';
+/** @jsx jsx */
+import React, {useState, useEffect} from 'react';
 import Axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { useRouteMatch } from 'react-router-dom';
+import { useDispatch, connect } from 'react-redux';
 
+import { jsx, css, ClassNames } from '@emotion/core';
+
+import Navbar from './Nav';
 import { addUser } from '../redux/actions';
-import { getSearch } from '../redux/selectors';
+import { getSearch, getUser } from '../redux/selectors';
 
-function UserContainer(user){
-    const dispatch = useDispatch();
-    dispatch(addUser(user));
-    return(
-        <div>
-            p
-        </div>
-    )
+function SetState(state){
+    switch(state){
+        case 0:
+            return("Offline");
+            
+        case 1:
+            return("Online");
+            
+        case 2:
+            return("Busy");
+            
+        case 3:
+            return("Away");
+            
+        case 4:
+            return("Snooze");
+            
+        case 5:
+            return("looking to trade");
+            
+        case 6:
+            return("looking to play");
+
+        default:
+            return('');
+    }
 }
 
+function UserContainer(props){
+    const dispatch = useDispatch();
+    const d = new Date(0);
+    const u = props.user;
+    //dispatch(addUser(props.user));
+    d.setUTCSeconds(u.lastlogoff);
+    const userState = SetState(u.personastate);
 
-export default class UserInfo extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            user: {},
-            search: this.props.id.userReducer.search,
-            pathArray: window.location.pathname.split('/'),
-            lastPart: '',
-        }
-    }
+    return(
+        <div css={css`
+        text-align: center;
+        z-index: 99;
+    `} >
+            <div className="UserBox"  
+                css={css`
+                    color: #c7d5e0;   `}>
+                <h3>{u.personaname}</h3>
+                <div>
+                    <img src={u.avatarfull} />
+                </div>
+                <a href={u.profileurl}>Steam Profile</a>
+                <p>Last Logoff: {d.toLocaleDateString()}</p>
+                <p className="currentStatus">Current Status: {userState}</p>
+                <p></p>
+
+            </div>
+        </div>
+    );
+}
+
+const cssThing = css`
+    text-align: center;
+    z-index: 99;
+`;
 
 
-    componentDidMount(){
-        this.setState({lastPart: this.state.pathArray[2]})
-        Axios.get(`/api/getUserInfo?${this.state.lastPart}`)
+export default function UserInfo(props){
+
+    const [user, setUser] = useState();
+    const pathArray = window.location.pathname.split('/');
+    const search = props.id.userReducer.search;
+
+
+    useEffect(() =>{
+        Axios.get(`/api/getUserInfo/${pathArray[2]}`)
             .then(res => {
-                //console.log(res.data.response.players);
-                this.setState({user: res.data.response.players[0]})
-            })
-            
-    }
+                console.log(res.data.response.players[0]);
+                setUser(res.data.response.players[0])
+            })}, []);
 
-    render(){
+    if(user){
         return(
-            <ul>
-                <li>{this.state.user.personaname}</li>
-                <img src={this.state.user.avatarfull} />
-                <userContainer />
-            </ul>
+            <div>
+                <Navbar id={user.steamid} active={"user"}/>
+                <UserContainer user={user} />
+            </div>
+        )
+    }
+    else{
+        return(
+            <div>
+                No user found
+            </div>
         )
     }
 }

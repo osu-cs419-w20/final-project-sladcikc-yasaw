@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -8,6 +9,8 @@ import {
   useRouteMatch,
   Redirect,
 } from 'react-router-dom';
+import { jsx, css, ClassNames } from '@emotion/core';
+
 import UserInfo from './Components/User'
 import SearchUser from './Components/Search'
 import { getSearch } from './redux/selectors'
@@ -79,10 +82,13 @@ function App() {
   const thing = useSelector(getSearch);
   console.log(thing)
   return( 
-    <div>
+    <div >
       <Switch>
         <Route path="/user/:id">
           <UserInfo id={thing}/>
+        </Route>
+        <Route path="/user/friends/:id">
+          <p>Friends</p>
         </Route>
         <Route exact path="/">
           <SearchUser />
