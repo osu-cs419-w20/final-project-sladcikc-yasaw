@@ -30,7 +30,17 @@ function FriendsContainer(props){
                 css={css`
                     color: #c7d5e0;   `}>
 
-                <ul>
+                <ul css={css`
+                    column-count: 7;
+                    column-rule: dotted 1px #333;
+                    @media (max-width: 1230px) {
+                        column-count: 4;
+                      } 
+                    @media (max-width: 768px) {
+                        column-count: 2;
+                      }          
+                    `
+                }>
                     {list}
                 </ul>
             </div>

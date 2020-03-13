@@ -62,10 +62,14 @@ function UserContainer(props){
                     <div>
                         <img src={u.avatarfull} />
                     </div>
-                    <a href={u.profileurl}>Steam Profile</a>
+                    <a href={u.profileurl} css={css`
+                        color: #c7d5e0;
+                        text-decoration: none;   `}
+                    >View on Steam</a>
                     <p>Last Logoff: {d.toLocaleDateString()}</p>
                     <p className="currentStatus">Current Status: {userState}</p>
-                    <p></p>
+                    <p className="game">{u.gameextrainfo ? `Playing: ${u.gameextrainfo}` : null}</p>
+                    <p>{u.realname ? `Real Name: ${u.realname}` : null}</p>
 
                 </div>
             </div>
@@ -76,26 +80,36 @@ function UserContainer(props){
             <div css={css`
             text-align: center;
             z-index: 99;
+            border: 2px solid #2a475e;
+            magrin-top: 5px;
+            margin-bottom: 5px;
         `} >
                 <div className="UserBox"  
                     css={css`
-                        color: #c7d5e0;   `}>
-                    <Link to={`/user/${u.steamid}`}><p>{u.personaname}</p></Link>
+                        color: #c7d5e0;
+                        display: inline-block;
+                           `}>
+                    <Link css={css`
+                        color: #c7d5e0;
+                        text-decoration: none;
+
+                        `}
+                        to={`/user/${u.steamid}`}
+                    >
+                        <p>{u.personaname}</p>
+                    </Link>
                     <div>
                         <img src={u.avatarfull} />
                     </div>
-                    <a href={u.profileurl}>Steam Profile</a>
+                    <a href={u.profileurl} css={css`
+                        color: #c7d5e0;
+                        text-decoration: none;   `}>View on Steam</a>
                     <p>Friend since: {d.toLocaleDateString()}</p>
                 </div>
             </div>
         );
     }
 }
-
-const cssThing = css`
-    text-align: center;
-    z-index: 99;
-`;
 
 
 export default function UserInfo(props){
