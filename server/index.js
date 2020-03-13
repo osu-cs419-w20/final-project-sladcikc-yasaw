@@ -18,6 +18,17 @@ app.get('/api/getUserInfo/:userID', (req, res) => {
     })
 });
 
+app.get('/api/getUserFriends/:userID', (req, res) => {
+    console.log(req.params)
+    var url = 'http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key='+apiKey+'&steamid='+req.params.userID+'&relationship=friend';
+    request(url, function(err, response, body){
+        if(!err && response.statusCode < 400){
+            console.log(body);
+            res.send(body);
+        }
+    })
+});
+
 app.listen(port, () => 
     console.log('Express server is running on localhost:8080')
     );

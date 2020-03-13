@@ -11,9 +11,11 @@ import {
 } from 'react-router-dom';
 import { jsx, css, ClassNames } from '@emotion/core';
 
-import UserInfo from './Components/User'
-import SearchUser from './Components/Search'
-import { getSearch } from './redux/selectors'
+import UserInfo from './Components/User';
+import UserFriends from './Components/Friends';
+import SearchUser from './Components/Search';
+import { getSearch } from './redux/selectors';
+import Navbar from './Components/Nav';
 import './App.css';
 
 
@@ -84,11 +86,13 @@ function App() {
   return( 
     <div >
       <Switch>
-        <Route path="/user/:id">
-          <UserInfo id={thing}/>
-        </Route>
         <Route path="/user/friends/:id">
-          <p>Friends</p>
+          <Navbar id={thing.userReducer.search} active={"friends"}/>
+          <UserFriends id={thing}/>
+        </Route>
+        <Route path="/user/:id">
+          <Navbar id={thing.userReducer.search} active={"user"}/>
+          <UserInfo id={thing}/>
         </Route>
         <Route exact path="/">
           <SearchUser />
@@ -126,4 +130,3 @@ function App() {
 }
 */
 export default App;
-//574F7810E04E32E957BD5947BC5A6CB0
