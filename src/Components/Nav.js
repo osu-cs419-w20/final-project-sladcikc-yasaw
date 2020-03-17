@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import{
     NavLink
 } from 'react-router-dom';
-import { jsx, css, ClassNames } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 
 
 function NavLonk(props){
@@ -17,12 +17,7 @@ function NavLonk(props){
               border-radius: 1px;
               text-decoration-line: none;
               display: inline-block;
-              float: ${props.text == "Yasaw" ? 'left' : 'none'};
-              @media (max-width: 768px) {
-                background-color: pink;
-                float: left;
-                display: none;
-              }          
+              float: ${props.text == "Yasaw" ? 'left' : 'none'};         
               &:hover{
                 background-color: #2a475e;
               }
@@ -66,17 +61,14 @@ function NavLonk(props){
             border: #2a475e 5px solid;
             background-color: #171a21;
             font-size: 24px;
-            text-align: center;
-            @media (max-width: 768px) {
-              display: none;
-            }   
+            text-align: center; 
           `}
           >
           <NavLonk text="Yasaw" to={"/"} />
           <NavLonk text="User" to={`/user/${props.id}`} active={props.active == "user" ? true : false}/>
           <NavLonk text="Friends" to={`/user/friends/${props.id}`} active={props.active == "friends" ? true : false}/>
           <NavLonk text="Games" to={`/user/games/${props.id}`} active={props.active == "games" ? true : false}/>
-          <NavLonk text="Achievements" to={`/user/achievements/${props.id}`} active={props.active == "achieve" ? true : false}/>
+{/*           <NavLonk text="Achievements" to={`/user/achievements/${props.id}`} active={props.active == "achieve" ? true : false}/> */}
           
         </nav>
       </div>

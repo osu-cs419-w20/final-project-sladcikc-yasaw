@@ -1,28 +1,32 @@
 /** @jsx jsx */
 import React, {useState, useEffect} from 'react';
 import Axios from 'axios';
+import { useDispatch } from 'react-redux';
+import Img from 'react-image';
 
-import { jsx, css } from '@emotion/core';
+import { jsx, css, ClassNames } from '@emotion/core';
 
 import UserInfo from './User';
+import { addGames } from '../redux/actions';
+import { getSearch, getUser } from '../redux/selectors';
 
 
+function AchieveContainer(props){
+    const d = new Date(0);
+    const u = props.games;
 
+    const list = u.map((game) =>
+        <div css={css` contain: content;`}>
 
-function FriendsContainer(props){
-
-    const u = props.friends;
-
-    const list = u.map((friend) =>
-        <UserInfo friend={friend}/>
-        );
+        </div> 
+        ); 
     return(
         <div css={css`
         text-align: center;
         display: block;
         z-index: 99;
     `} >
-            <div className="FriendsBox"  
+            <div className="GamesBox"  
                 css={css`
                     color: #c7d5e0;   `}>
 
@@ -37,37 +41,31 @@ function FriendsContainer(props){
                       }          
                     `
                 }>
-                    {list}
+
                 </ul>
             </div>
         </div>
     );
 }
 
-export default function UserFriends(props){
 
-    const [friends, setFriends] = useState();
+export default function UserAchieve(props){
+
     const pathArray = window.location.pathname.split('/');
+    const id = pathArray[3]
 
-
-    useEffect(() =>{
-        Axios.get(`/api/getUserFriends/${pathArray[3]}`)
-            .then(res => {
-                console.log(res.data.friendslist.friends);
-                setFriends(res.data.friendslist.friends)
-            })}, []);
-
-    if(friends){
+    if(props.games){
         return(
-            <div>              
-                <FriendsContainer friends={friends} />
+            <div>          
+                <AchieveContainer games={props.games} id={id}/>
             </div>
         )
     }
     else{
         return(
-            <div>
-                Profile does not allow friends to be viewed.
+            <div css={css`
+            color: #c7d5e0; text-align: center;   `}>
+                Profile has not earned achievements.
             </div>
         )
     }

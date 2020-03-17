@@ -13,12 +13,6 @@ import { jsx, css, ClassNames } from '@emotion/core';
 import { addSearch } from '../redux/actions';
 import { getSearch } from '../redux/selectors';
 
-function HandleChange(value){
-    const dispatch = useDispatch();
-    const thing = useSelector(getSearch)
-}
-
-
 export default function SearchUser(){
     const dispatch = useDispatch();
     const [value, setValue] = useState();
@@ -34,9 +28,13 @@ export default function SearchUser(){
         `}>
             <h1 css={css`color: #2a475e;`} >Yasaw</h1>
             <form>
+                <p                 css={css`
+                    color: #c7d5e0;   `}>Enter a valid steamID64</p>
+                
                 <input className={valid} type="text" value={value} onChange={event => setValue(event.target.value)}></input>
                 <Link css={css`display: block;`}to={value?`/user/${value}`:"/"}><button type="submit"onClick={() => dispatch(addSearch(value)) }>Search</button></Link>
             </form>
+            <p><a href="https://steamid.io/">Find steamID here</a></p>
         </div>
     );
 

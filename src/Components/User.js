@@ -1,15 +1,14 @@
 /** @jsx jsx */
 import React, {useState, useEffect} from 'react';
 import Axios from 'axios';
-import { useDispatch, connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import{
     Link
 } from 'react-router-dom';
-import { jsx, css, ClassNames } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 
-import Navbar from './Nav';
-import { addUser, addSearch } from '../redux/actions';
-import { getSearch, getUser } from '../redux/selectors';
+import { addSearch } from '../redux/actions';
+
 
 function SetState(state){
     switch(state){
@@ -70,6 +69,7 @@ function UserContainer(props){
                     <p className="currentStatus">Current Status: {userState}</p>
                     <p className="game">{u.gameextrainfo ? `Playing: ${u.gameextrainfo}` : null}</p>
                     <p>{u.realname ? `Real Name: ${u.realname}` : null}</p>
+                    {props.bans ? <p css={css`color: red `}>VAC Banned: {props.bans.VACBanned ? "Yes" : "No"}</p> : null}
 
                 </div>
             </div>
@@ -115,6 +115,7 @@ function UserContainer(props){
 export default function UserInfo(props){
 
     const [user, setUser] = useState();
+    const [bans, setBans] = useState();
     const pathArray = window.location.pathname.split('/');
     const dispatch = useDispatch();
 
@@ -127,11 +128,20 @@ export default function UserInfo(props){
             })
             .then(dispatch(addSearch(props.friend ? `${props.friend.steamid}` : `${pathArray[2]}`)))
         }, []);
-    
+
+    useEffect(() =>{
+        Axios.get(`/api/getUserBans/${pathArray[2]}`)
+            .then(res => {
+                console.log(res.data.players[0]);
+                setBans(res.data.players[0])
+            })
+        }, []);
+
+
     if(user && !props.friend){
         return(
             <div>
-                <UserContainer user={user} />
+                <UserContainer user={user} bans={bans}/>
             </div>
         )
     }

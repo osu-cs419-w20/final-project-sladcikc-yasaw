@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import {
     ADD_USER,
     ADD_SEARCH,
+    ADD_GAMES
 } from './actions';
 
 function userReducer(state = {}, action){
@@ -10,6 +11,10 @@ function userReducer(state = {}, action){
         case ADD_USER:
             return({
                 user: action.user
+            });
+        case ADD_GAMES:
+            return({
+                games: action.games
             });
         case ADD_SEARCH:
             return({

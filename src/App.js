@@ -14,13 +14,15 @@ import { jsx, css, ClassNames } from '@emotion/core';
 import UserInfo from './Components/User';
 import UserFriends from './Components/Friends';
 import SearchUser from './Components/Search';
-import { getSearch } from './redux/selectors';
+import { getSearch, getGames } from './redux/selectors';
 import Navbar from './Components/Nav';
+import UserGames from './Components/Games';
+import UserAchieve from './Components/Achieve';
 import './App.css';
 
 
+
 function App() {
-  const [data, setData] = useState({});
   const pathArray = window.location.pathname.split('/');
   const thing = useSelector(getSearch);
   console.log(thing)
@@ -30,6 +32,14 @@ function App() {
         <Route path="/user/friends/:id">
           <Navbar id={pathArray[pathArray.length - 1]} active={"friends"}/>
           <UserFriends id={thing}/>
+        </Route>
+        <Route path="/user/games/:id">
+          <Navbar id={pathArray[pathArray.length - 1]} active={"games"}/>
+          <UserGames id={thing}/>
+        </Route>
+        <Route path="/user/achievements/:id">
+          <Navbar id={pathArray[pathArray.length - 1]} active={"achieve"}/>
+          <UserAchieve id={thing} games={thing.userReducer.games}/>
         </Route>
         <Route path="/user/:id">
           <Navbar id={pathArray[pathArray.length - 1]} active={"user"}/>
